@@ -3,133 +3,211 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.IO;//BIBLIOCTECA QUE PERMITE USAR EL BUFFER DE ESCRITURA Y LECTURA
 
 namespace persona_herencia
 {
-    // Clase base 'Persona'
     class Persona
+    { //cuando una persona se crea desde 0 unicamente tiene
+        protected int edad; //caja que guarda edad
+        protected string nombre;//caja que guarda nombre
+        protected string fechanac;//caja que guarda fecha de nacimiento
+
+        public int Edad //CAJA DE MEMORIA edad
+        {
+            get { return edad; } //vamos por el valor
+                                 //de la caja de texto
+            set { edad = value; }//lo guardamos en memoria
+        }
+        public string Fechanac //CAJA DE MEMORIA fechanacimiento
+        {
+            get { return fechanac; } //vamos por el valor
+                                     //de la caja de texto
+            set { fechanac = value; }//lo guardamos en memoria
+        }
+        public string Nombre //CAJA DE MEMORIA nombre
+        {
+            get { return nombre; } //vamos por el valor
+                                   //de la caja de texto
+            set { nombre = value; }//lo guardamos en memoria
+        }
+        //constructor de estructura persona
+        /* public Persona (string nombre, int edad, string fechanac)
+         {
+             Nombre = nombre;
+             Edad = edad;
+             Fechanac = fechanac;
+         }*/
+    }
+
+    class Alumno : Persona
     {
-        // Variables protegidas para los datos de la persona
-        protected string nombre;
-        protected string fechaNa;
-        protected string edad;
-
-        // Propiedades públicas para acceder a los datos
-        public string Nombre { get; set; }
-        public string FechaNa { get; set; }
-        public string Edad { get; set; }
-
-        // Constructor de la clase 'Persona'
-        public Persona(string nombre, string fechaNa, string edad)
+        protected int matricula;
+        protected string carrera;
+        public int Matricula //CAJA DE MEMORIA edad
+        {
+            get { return matricula; } //vamos por el valor
+                                      //de la caja de texto
+            set { matricula = value; }//lo guardamos en memoria
+        }
+        public string Carrera //CAJA DE MEMORIA fechanacimiento
+        {
+            get { return carrera; } //vamos por el valor
+                                    //de la caja de texto
+            set { carrera = value; }//lo guardamos en memoria
+        }
+        public Alumno(string nombre, int edad, string fechanac, string carrera, int matricula)
         {
             Nombre = nombre;
-            FechaNa = fechaNa;
             Edad = edad;
-        }
-
-        // Método para mostrar información de la persona
-        public void MostrarInformacion()
-        {
-            Console.WriteLine($"Nombre: {Nombre}");
-            Console.WriteLine($"Fecha de Nacimiento: {FechaNa}");
-            Console.WriteLine($"Edad: {Edad}");
-        }
-    }
-
-    // Clase 'Alumnos' que hereda de 'Persona'
-    class Alumnos : Persona
-    {
-        // Atributos específicos de los alumnos
-        protected string matricula;
-        protected string carrera;
-
-        // Propiedades públicas para acceder a los atributos específicos de los alumnos
-        public string Matricula { get; set; }
-        public string Carrera { get; set; }
-
-        // Constructor de la clase 'Alumnos'
-        public Alumnos(string nombre, string fechaNa, string edad, string matricula, string carrera)
-            : base(nombre, fechaNa, edad)
-        {
-            Matricula = matricula;
+            Fechanac = fechanac;
             Carrera = carrera;
+            Matricula = matricula;
         }
 
-        // Método para mostrar información del alumno
-        public void MostrarInformacionAlumno()
+        public void Guardar_info()
         {
-            MostrarInformacion(); // Llama al método de la clase base
-            Console.WriteLine($"Matrícula: {Matricula}");
-            Console.WriteLine($"Carrera: {Carrera}");
+            try //EXCEPCIÓN
+            {
+                string fileName =
+                    @"E:\Ejercicios POO\Proyecto_P2-main\Proyecto_P2-main\archivostxt\RegistroAlumnos.txt";
+                // esto inserta texto en un archivo existente, si el archivo no existe lo crea
+                StreamWriter writer = File.AppendText(fileName);
+                //  writer.WriteLine("Este es un dato nuevo desde guardar");
+                writer.WriteLine("Nombre: " + Nombre);
+                writer.WriteLine("Edad: " + Edad);
+                writer.WriteLine("Fecha Nacimiento: " + Fechanac);
+                writer.WriteLine("Carrera: " + Carrera);
+                writer.WriteLine("Matricula: " + Matricula);
+                writer.WriteLine("\n");
+                writer.Close();
+            }
+            catch
+            {
+                MessageBox.Show("Error al guardar Datos en el Archivo: RegistroAlumnos.TXT", "ERROR",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 
-    // Clase 'Empleado' que hereda de 'Persona'
     class Empleado : Persona
     {
-        // Atributos específicos de los empleados
-        protected string dni;
+        protected float sueldo;
         protected string puesto;
-        protected string sueldo;
-
-        // Propiedades públicas para acceder a los atributos específicos de los empleados
-        public string Dni { get; set; }
-        public string Puesto { get; set; }
-        public string Sueldo { get; set; }
-
-        // Constructor de la clase 'Empleado'
-        public Empleado(string nombre, string fechaNa, string edad, string dni, string puesto, string sueldo)
-            : base(nombre, fechaNa, edad)
+        protected int dni;
+        public int DNI //CAJA DE MEMORIA MATRICULA DE TRABAJADOR
         {
-            Dni = dni;
+            get { return dni; } //vamos por el valor
+                                //de la caja de texto
+            set { dni = value; }//lo guardamos en memoria
+        }
+        public float Sueldo //CAJA DE MEMORIA edad
+        {
+            get { return sueldo; } //vamos por el valor
+                                   //de la caja de texto
+            set { sueldo = value; }//lo guardamos en memoria
+        }
+        public string Puesto //CAJA DE MEMORIA fechanacimiento
+        {
+            get { return puesto; } //vamos por el valor
+                                   //de la caja de texto
+            set { puesto = value; }//lo guardamos en memoria
+        }
+
+        public Empleado(string nombre, int edad, string fechanac, int dni, string puesto, float sueldo)
+        {
+            Nombre = nombre;
+            Edad = edad;
+            Fechanac = fechanac;
+            DNI = dni;
             Puesto = puesto;
             Sueldo = sueldo;
         }
 
-        // Método para mostrar información del empleado
-        public void MostrarInformacionEmpleado()
+        public void Guardar_info()
         {
-            MostrarInformacion(); // Llama al método de la clase base
-            Console.WriteLine($"DNI: {Dni}");
-            Console.WriteLine($"Puesto: {Puesto}");
-            Console.WriteLine($"Sueldo: {Sueldo}");
+            try //EXCEPCIÓN
+            {
+                string fileName =
+                    @"E:\Ejercicios POO\Proyecto_P2-main\Proyecto_P2-main\archivostxt\RegistroEmpleado.txt";
+                // esto inserta texto en un archivo existente, si el archivo no existe lo crea
+                StreamWriter writer = File.AppendText(fileName);
+                //  writer.WriteLine("Este es un dato nuevo desde guardar");
+                writer.WriteLine("Nombre: " + Nombre);
+                writer.WriteLine("Edad: " + Edad);
+                writer.WriteLine("Fecha Nacimiento: " + Fechanac);
+                writer.WriteLine("DNI: " + DNI);
+                writer.WriteLine("Puesto: " + Puesto);
+                writer.WriteLine("Sueldo: " + Sueldo);
+                writer.WriteLine("\n");
+                writer.Close();
+            }
+            catch
+            {
+                MessageBox.Show("Error al guardar Datos en el Archivo: RegistroEmpleado.TXT", "ERROR",
+                 MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 
-    // Clase 'Docente' que hereda de 'Persona'
     class Docente : Persona
     {
-        // Atributos específicos de los docentes
-        protected string dni;
+        protected float sueldo;
         protected string puesto;
-        protected string sueldo;
-
-        // Propiedades públicas para acceder a los atributos específicos de los docentes
-        public string Dni { get; set; }
-        public string Puesto { get; set; }
-        public string Sueldo { get; set; }
-
-        // Constructor de la clase 'Docente'
-        public Docente(string nombre, string fechaNa, string edad, string dni, string puesto, string sueldo)
-            : base(nombre, fechaNa, edad)
+        protected int dni;
+        public int DNI //CAJA DE MEMORIA edad
         {
-            Dni = dni;
+            get { return dni; } //vamos por el valor
+                                //de la caja de texto
+            set { dni = value; }//lo guardamos en memoria
+        }
+        public float Sueldo //CAJA DE MEMORIA edad
+        {
+            get { return sueldo; } //vamos por el valor
+                                   //de la caja de texto
+            set { sueldo = value; }//lo guardamos en memoria
+        }
+        public string Puesto //CAJA DE MEMORIA fechanacimiento
+        {
+            get { return puesto; } //vamos por el valor
+                                   //de la caja de texto
+            set { puesto = value; }//lo guardamos en memoria
+        }
+        public Docente(string nombre, int edad, string fechanac, int dni, string puesto, float sueldo)
+        {
+            Nombre = nombre;
+            Edad = edad;
+            Fechanac = fechanac;
+            DNI = dni;
             Puesto = puesto;
             Sueldo = sueldo;
         }
 
-        // Método para mostrar información del docente
-        public void MostrarInformacionDocente()
+        public void Guardar_info()
         {
-            MostrarInformacion(); // Llama al método de la clase base
-            Console.WriteLine($"DNI: {Dni}");
-            Console.WriteLine($"Puesto: {Puesto}");
-            Console.WriteLine($"Sueldo: {Sueldo}");
+            try //EXCEPCIÓN
+            {
+                string fileName =
+                    @"E:\Ejercicios POO\Proyecto_P2-main\Proyecto_P2-main\archivostxt\RegistroDocente.txt";
+                // esto inserta texto en un archivo existente, si el archivo no existe lo crea
+                StreamWriter writer = File.AppendText(fileName);
+                //  writer.WriteLine("Este es un dato nuevo desde guardar");
+                writer.WriteLine("Nombre: " + Nombre);
+                writer.WriteLine("Edad: " + Edad);
+                writer.WriteLine("Fecha Nacimiento: " + Fechanac);
+                writer.WriteLine("DNI: " + DNI);
+                writer.WriteLine("Puesto: " + Puesto);
+                writer.WriteLine("Sueldo: " + Sueldo);
+                writer.WriteLine("\n");
+                writer.Close();
+            }
+            catch
+            {
+                MessageBox.Show("Error al guardar Datos en el Archivo: RegistroDocente.TXT", "ERROR",
+                 MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
-
-    // Clase 'Program' que contiene el punto de entrada principal de la aplicación
     static class Program
     {
         /// <summary>
@@ -141,12 +219,7 @@ namespace persona_herencia
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
-
-            // Ejemplo de uso
-            // Crear un alumno
-            Alumnos alumno1 = new Alumnos("Jose", "13/08/2004", "21", "123", "Ingeniería");
-            // Mostrar información del alumno
-            alumno1.MostrarInformacionAlumno();
         }
     }
+
 }
